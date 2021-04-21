@@ -88,6 +88,26 @@ client.connect(err => {
     })
   })
 
+
+  app.post('/updateBookingStatus',(req,res)=>{
+    const {id,serviceStatus} = req.body;
+    const objId = ObjectID(id);
+    // console.log(id, serviceStatus);
+    bookingCollection.updateOne(
+      {"_id":objId},{$set: {"serviceStatus": serviceStatus}}, (error , response ) =>{
+        if(err)
+          console.log(error);
+        if(response){
+          res.send(response)
+        }
+      }
+    )
+    // .then(result => {
+    //   console.log(result);
+    // })
+    
+  })
+
   app.get('/getBookingsByEmail',(req,res)=>{
     const email = req.query.email;
     console.log(email);
